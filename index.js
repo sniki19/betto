@@ -1,6 +1,6 @@
-import { app } from './src/components/app'
-import { dispatch } from './src/services/dataService'
-import { initStoreAction } from './src/utils/constants'
+import { app } from './src/components/sections/app'
+import { initStoreAction } from './src/utils/actions'
+import { dispatch } from './src/utils/dataService'
 
 dispatch(initStoreAction())
 

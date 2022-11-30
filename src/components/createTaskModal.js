@@ -1,10 +1,13 @@
-import { dispatch as dataDispatch, store } from '../services/dataService'
-import { dispatch as modalDispatch } from '../services/modalManager'
-import { addTaskToBoardAction, closeModalAction, getAllUsersAction, getTaskById, updateTaskAction } from '../utils/constants'
 import {
-	createButton as cb,
-	createElement as ce, createFragment, createSelectBox as csb, createTextArea as cta, createTextInput as cti
-} from './shared/create'
+	addTaskToBoardAction,
+	closeModalAction,
+	getAllUsersAction,
+	getTaskByIdAction,
+	updateTaskAction
+} from '../utils/actions'
+import { dispatch as dataDispatch } from '../utils/dataService'
+import { dispatch as modalDispatch } from '../utils/modalManager'
+import { cb, ce, cf, csb, cta, cti } from './shared'
 
 const createUserSelectBox = (callback, selectedId) => {
 	const usersBox = csb({}, (e) => {
@@ -34,11 +37,11 @@ const getPropsById = id => {
 			description: '',
 			time: Date.now(),
 			userId: '',
-			workflowStateId: 'todo'
+			workflowStep: 'todo'
 		}
 	}
 
-	const task = dataDispatch(getTaskById(id))
+	const task = dataDispatch(getTaskByIdAction(id))
 	return task
 }
 
@@ -95,6 +98,6 @@ export const createTaskModalContent = id => {
 		]
 	})
 
-	const task = createFragment([line1, line2, line3])
+	const task = cf([line1, line2, line3])
 	return task
 }

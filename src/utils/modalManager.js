@@ -1,5 +1,5 @@
 import { createModalLayout } from '../components/layouts/modal'
-import { actionType } from '../utils/constants'
+import { actionType } from './constants'
 
 const defaultState = {
 	modal: null,
@@ -37,3 +37,4 @@ function dispatch(action) {
 export {
 	dispatch
 }
+

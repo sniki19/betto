@@ -1,8 +1,8 @@
+import { ce, cf } from '../shared'
 import { main } from './main'
-import { createElement as ce, createFragment as ct } from './shared/create'
 
 export const app = () => {
-	const content = ct([
+	const content = cf([
 		ce('header'),
 		main(),
 		ce('footer')

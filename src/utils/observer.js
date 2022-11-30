@@ -1,4 +1,4 @@
-export class EventObserver {
+export class Observer {
 	constructor() {
 		this.observers = []
 	}

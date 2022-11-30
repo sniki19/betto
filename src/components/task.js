@@ -1,7 +1,7 @@
-import { createButton as cb, createElement as ce } from './shared/create'
+import { cb, ce } from './shared'
 
 export const createTask = props => {
-	const { id, title, description, time, userId, workflowStateId } = props
+	const { id, title, description, time, userId, workflowStep } = props
 
 	const line1 = ce('div', {
 		children: [
@@ -53,7 +53,7 @@ export const createTask = props => {
 	})
 
 	const line4 = ce('div', {
-		innerHTML: workflowStateId
+		innerHTML: workflowStep
 	})
 
 	const task = ce('div', {

@@ -1,4 +1,4 @@
-import { createElement as ce } from '../shared/create'
+import { ce } from '../shared'
 
 export const createModalLayout = () => {
 	const content = ce('div', {

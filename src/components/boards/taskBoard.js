@@ -1,9 +1,9 @@
-import { dispatch as dataDispatch } from '../services/dataService'
-import { dispatch as modalDispatch } from '../services/modalManager'
-import { deleteAllCompletedTasksAction, deleteTaskAction, moveTaskToNextBoardAction, openModalAction } from '../utils/constants'
-import { createTaskModalContent as createTaskModal } from './createTaskModal'
-import { createButton as cb, createElement as ce } from './shared/create'
-import { createTask } from './task'
+import { deleteAllCompletedTasksAction, deleteTaskAction, moveTaskToNextBoardAction, openModalAction } from '../../utils/actions'
+import { dispatch as dataDispatch, store } from '../../utils/dataService'
+import { dispatch as modalDispatch } from '../../utils/modalManager'
+import { createTaskModalContent as createTaskModal } from '../createTaskModal'
+import { cb, ce } from '../shared'
+import { createTask } from '../task'
 
 const createBoardHeader = (name) => {
 	const title = ce('div', {
@@ -71,7 +71,7 @@ const createBoardFooter = (props) => {
 }
 
 export const createTaskBoard = (props) => {
-	const { id, name, btnOptions = null } = props
+	const { id, name, btnOptions = null, filter } = props
 
 	const board = ce('section', {
 		id,
@@ -114,20 +114,21 @@ export const createTaskBoard = (props) => {
 		}
 	})
 
-	return {
-		board,
-		load: tasks => {
-			if (!tasks || !tasks.length) {
-				tasks = []
-			}
-
-			main.clean()
-			tasks.forEach(task => {
-				const taskItem = createTask(task)
-				main.addItem(taskItem)
-			})
-
-			header.updateCounter(tasks.length)
+	store.subscribe(data => {
+		if (!data.tasks) {
+			return
 		}
-	}
+
+		const tasks = data.tasks.filter(filter) || []
+
+		main.clean()
+		tasks.forEach(task => {
+			const taskItem = createTask(task)
+			main.addItem(taskItem)
+		})
+
+		header.updateCounter(tasks.length)
+	})
+
+	return board
 }
