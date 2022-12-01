@@ -1,5 +1,5 @@
 import { actionType } from '../utils/constants'
-import { getNextWorkflowStep } from '../utils/workflow'
+import { getNextWorkflowStep, getWorkflowStep } from '../utils/workflow'
 
 export const reducer = (state, action) => {
 	switch (action.type) {
@@ -30,6 +30,18 @@ export const reducer = (state, action) => {
 			if (nextStep) {
 				targetTask.workflowStep = nextStep
 			}
+
+			return state = {
+				...state,
+				tasks: [...otherTasks, targetTask]
+			}
+		}
+		case actionType.moveTaskToBoard: {
+			const { id: taskId, boardId } = action.payload
+
+			const otherTasks = state.tasks.filter(task => task.id !== taskId)
+			const targetTask = state.tasks.find(task => task.id === taskId)
+			targetTask.workflowStep = getWorkflowStep(boardId)
 
 			return state = {
 				...state,

@@ -1,6 +1,6 @@
-import { boardIdList } from '../../utils/constants'
-import { createTaskBoard } from '../boards/taskBoard'
+import { boardIdList } from '../../utils/workflow'
 import { ce } from '../shared'
+import { createTaskBoard } from '../tasks/taskBoard'
 
 export const main = () => {
 	const todoBoard = createTaskBoard({

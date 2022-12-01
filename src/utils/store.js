@@ -9,7 +9,9 @@ export class Store extends Observer {
 	}
 
 	broadcast(data) {
-		this.state = data
+		this.state = {
+			...data
+		}
 		this.observers.forEach(subscriber => subscriber(data))
 	}
 

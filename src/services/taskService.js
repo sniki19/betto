@@ -4,10 +4,6 @@ const url = endpoint => {
 
 const fetchData = request => fetch(request)
 	.then(response => response.json())
-	.then(data => {
-		console.log('tasks >> ', data)
-		return data
-	})
 
 const getAll = () => {
 	return fetchData(url('tasks'))

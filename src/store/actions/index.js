@@ -5,7 +5,8 @@ import {
 	deleteTaskAction,
 	moveTaskToNextBoardAction,
 	updateTaskAction,
-	loadTasksAction
+	loadTasksAction,
+	moveTaskToBoardAction
 } from './tasks'
 import { loadUsersAction } from './users'
 
@@ -15,6 +16,7 @@ export {
 	deleteTaskAction,
 	deleteAllCompletedTasksAction,
 	moveTaskToNextBoardAction,
+	moveTaskToBoardAction,
 	loadUsersAction,
 	openModalAction,
 	closeModalAction,

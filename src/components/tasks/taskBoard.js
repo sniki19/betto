@@ -2,8 +2,8 @@ import { createModal } from '../../modal/modalManager'
 import { store } from '../../store'
 import { deleteAllCompletedTasksAction, deleteTaskAction, moveTaskToNextBoardAction, openModalAction } from '../../store/actions'
 import { cb, ce } from '../shared'
-import { createTaskModalContent } from '../tasks/taskModal'
-import { createTask } from '../tasks/task'
+import { createTask } from './task'
+import { createTaskModalContent } from './taskModal'
 
 const createBoardHeader = (name) => {
 	const title = ce('div', {
@@ -75,7 +75,8 @@ export const createTaskBoard = (props) => {
 
 	const board = ce('section', {
 		id,
-		className: 'board'
+		className: 'board',
+		'data-dndzone': true
 	})
 
 	const header = createBoardHeader(name)

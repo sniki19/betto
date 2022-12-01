@@ -66,6 +66,7 @@ export const createTask = props => {
 		id: id,
 		className: 'task',
 		style: 'border: 1px solid red',
+		'data-dnditem': true,
 		children: [line1, line2, line3, line4]
 	})
 

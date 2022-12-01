@@ -20,8 +20,16 @@ export const deleteAllCompletedTasksAction = () => ({
 })
 
 export const moveTaskToNextBoardAction = id => ({
-	type: actionType.moveTaskToNextBoard,
+	type: actionType.moveTaskToBoard,
 	payload: id
+})
+
+export const moveTaskToBoardAction = (id, boardId) => ({
+	type: actionType.moveTaskToBoard,
+	payload: {
+		id,
+		boardId
+	}
 })
 
 export const loadTasksAction = tasks => ({
