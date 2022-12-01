@@ -12,7 +12,8 @@ export const createElement = (tagName, props = {}) => {
 		if (customProperties.includes(prop)) {
 			switch (prop) {
 				case 'children':
-					element.append(...props[prop])
+					const children = props[prop].filter(item => !!item)
+					element.append(...children)
 					break;
 				default:
 					break;

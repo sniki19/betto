@@ -1,20 +1,13 @@
-import {
-	addTaskToBoardAction,
-	closeModalAction,
-	getAllUsersAction,
-	getTaskByIdAction,
-	updateTaskAction
-} from '../utils/actions'
-import { dispatch as dataDispatch } from '../utils/dataService'
-import { dispatch as modalDispatch } from '../utils/modalManager'
-import { cb, ce, cf, csb, cta, cti } from './shared'
+import { addTaskToBoardAction, closeModalAction, updateTaskAction } from '../../store/actions'
+import { store } from '../../store'
+import { cb, ce, cf, csb, cta, cti } from '../shared'
 
 const createUserSelectBox = (callback, selectedId) => {
 	const usersBox = csb({}, (e) => {
 		callback(e.target.value)
 	})
 
-	const users = dataDispatch(getAllUsersAction())
+	const users = store.getState().users
 	users.forEach(user => {
 		const option = ce('option', {
 			value: user.id,
@@ -41,7 +34,7 @@ const getPropsById = id => {
 		}
 	}
 
-	const task = dataDispatch(getTaskByIdAction(id))
+	const task = store.getState().tasks.find(task => task.id === id)
 	return task
 }
 
@@ -80,18 +73,18 @@ export const createTaskModalContent = id => {
 					cb({
 						value: 'Cancel'
 					}, () => {
-						modalDispatch(closeModalAction())
+						store.dispatch(closeModalAction())
 					}),
 					cb({
 						value: 'Confirm'
 					}, () => {
 						if (isNewTask) {
-							dataDispatch(addTaskToBoardAction(props))
+							store.dispatch(addTaskToBoardAction(props))
 						} else {
-							dataDispatch(updateTaskAction(props))
+							store.dispatch(updateTaskAction(props))
 						}
 
-						modalDispatch(closeModalAction())
+						store.dispatch(closeModalAction())
 					})
 				]
 			})

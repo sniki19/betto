@@ -1,4 +1,5 @@
-import { cb, ce } from './shared'
+import { nextWorkflowStepExists } from '../../utils/workflow'
+import { cb, ce } from '../shared'
 
 export const createTask = props => {
 	const { id, title, description, time, userId, workflowStep } = props
@@ -27,15 +28,20 @@ export const createTask = props => {
 		]
 	})
 
+	let nextStepBtn = null
+	if (nextWorkflowStepExists(workflowStep)) {
+		nextStepBtn = cb({
+			value: '>',
+			'data-action': 'move'
+		})
+	}
+
 	const line2 = ce('div', {
 		children: [
 			ce('span', {
 				innerHTML: description
 			}),
-			cb({
-				value: '>',
-				'data-action': 'move'
-			})
+			nextStepBtn
 		]
 	})
 

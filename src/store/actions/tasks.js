@@ -1,4 +1,4 @@
-import { actionType } from '../constants'
+import { actionType } from '../../utils/constants'
 
 export const addTaskToBoardAction = task => ({
 	type: actionType.addTaskOnBoard,
@@ -24,7 +24,7 @@ export const moveTaskToNextBoardAction = id => ({
 	payload: id
 })
 
-export const getTaskByIdAction = id => ({
-	type: actionType.getTaskById,
-	payload: id
+export const loadTasksAction = tasks => ({
+	type: actionType.loadTasks,
+	payload: tasks
 })

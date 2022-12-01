@@ -1,7 +1,8 @@
 import { app } from './src/components/sections/app'
-import { initStoreAction } from './src/utils/actions'
-import { dispatch } from './src/utils/dataService'
+import { fetchTasks, fetchUsers } from './src/services/asyncActions'
+import { store } from './src/store'
 
-dispatch(initStoreAction())
+store.dispatch(fetchUsers())
+store.dispatch(fetchTasks())
 
 root.append(app())

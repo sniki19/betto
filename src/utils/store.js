@@ -1,9 +1,11 @@
-import { Observer } from './observer'
+import { Observer } from './Observer'
+import { isFunction, isObject } from './tools'
 
 export class Store extends Observer {
-	constructor(defaultState = {}) {
+	constructor(defaultState = {}, reducer) {
 		super()
 		this.state = defaultState
+		this.reducer = reducer
 	}
 
 	broadcast(data) {
@@ -14,6 +16,17 @@ export class Store extends Observer {
 	getState() {
 		return {
 			...this.state
+		}
+	}
+
+	dispatch(action) {
+		if (isObject(action)) {
+			const newState = this.reducer(this.state, action)
+			this.broadcast(newState)
+		} else if (isFunction(action)) {
+			action(this.dispatch.bind(this))
+		} else {
+			throw new Error('Invalid action type')
 		}
 	}
 }

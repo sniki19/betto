@@ -1,9 +1,9 @@
-import { deleteAllCompletedTasksAction, deleteTaskAction, moveTaskToNextBoardAction, openModalAction } from '../../utils/actions'
-import { dispatch as dataDispatch, store } from '../../utils/dataService'
-import { dispatch as modalDispatch } from '../../utils/modalManager'
-import { createTaskModalContent as createTaskModal } from '../createTaskModal'
+import { createModal } from '../../modal/modalManager'
+import { store } from '../../store'
+import { deleteAllCompletedTasksAction, deleteTaskAction, moveTaskToNextBoardAction, openModalAction } from '../../store/actions'
 import { cb, ce } from '../shared'
-import { createTask } from '../task'
+import { createTaskModalContent } from '../tasks/taskModal'
+import { createTask } from '../tasks/task'
 
 const createBoardHeader = (name) => {
 	const title = ce('div', {
@@ -95,21 +95,21 @@ export const createTaskBoard = (props) => {
 
 		switch (target.dataset.action) {
 			case 'add':
-				const createModal = createTaskModal()
-				modalDispatch(openModalAction(createModal))
+				createModal(createTaskModalContent())
+				store.dispatch(openModalAction())
 				break
 			case 'move':
-				dataDispatch(moveTaskToNextBoardAction(id))
+				store.dispatch(moveTaskToNextBoardAction(id))
 				break
 			case 'edit':
-				const editModal = createTaskModal(id)
-				modalDispatch(openModalAction(editModal))
+				createModal(createTaskModalContent(id))
+				store.dispatch(openModalAction())
 				break
 			case 'delete':
-				dataDispatch(deleteTaskAction(id))
+				store.dispatch(deleteTaskAction(id))
 				break
 			case 'delete-all':
-				dataDispatch(deleteAllCompletedTasksAction())
+				store.dispatch(deleteAllCompletedTasksAction())
 				break
 		}
 	})

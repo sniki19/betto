@@ -1,3 +1,13 @@
+/*
+const observer = new EventObserver()
+
+observer.subscribe(data => {
+	console.log('subscribe for module 1', data)
+})
+
+observer.broadcast({someData: 'hi'})
+*/
+
 export class Observer {
 	constructor() {
 		this.observers = []
@@ -15,13 +25,3 @@ export class Observer {
 		this.observers.forEach(subscriber => subscriber(data))
 	}
 }
-
-/*
-const observer = new EventObserver()
-
-observer.subscribe(data => {
-	console.log('subscribe for module 1', data)
-})
-
-observer.broadcast({someData: 'hi'})
-*/
