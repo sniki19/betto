@@ -6,11 +6,13 @@ import { createTask } from './task'
 import { createTaskModalContent } from './taskModal'
 
 const createBoardHeader = (name) => {
-	const title = ce('div', {
-		innerHTML: `${name.toUpperCase()}:`
+	const title = ce('h3', {
+		className: 'title',
+		textContent: `${name.toUpperCase()}:`
 	})
 	const counter = ce('div', {
-		innerHTML: '0'
+		className: 'counter',
+		textContent: '0'
 	})
 
 	const header = ce('header', {
@@ -21,7 +23,7 @@ const createBoardHeader = (name) => {
 	})
 
 	function updateCounter(value) {
-		counter.innerHTML = value
+		counter.textContent = value
 	}
 
 	return {
@@ -54,6 +56,7 @@ const createBoardFooter = (props) => {
 	const { name, action } = props
 
 	const button = cb({
+		className: 'btn board-bottom-btn',
 		value: name,
 		'data-action': action
 	})

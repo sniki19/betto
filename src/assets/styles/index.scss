@@ -1,0 +1,287 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+$headerTextColor: rgb(32, 55, 129);
+$backColor: rgba(212, 236, 245, 0.89);
+$borderColor: rgb(32, 55, 129);
+$shadowColor: rgba(128, 128, 128, 0.75);
+
+* {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	margin-block-start: .5em;
+	margin-block-end: .5em;
+}
+
+h3 {
+	margin-block-start: .25em;
+	margin-block-end: .25em;
+	font-size: 1.2em;
+}
+
+.btn {
+	font-size: 1em;
+	font-family: 'Roboto Mono';
+	text-transform: uppercase;
+	border: 1px solid $borderColor;
+	border-radius: .5em;
+	background-color: $backColor;
+	box-shadow: 3px 2px 5px 2px gray;
+
+	&:active {
+		box-shadow: inset 3px 2px 5px 2px gray;
+	}
+
+	& + .btn {
+		margin-left: .5em;
+	}
+}
+
+#root {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	box-sizing: border-box;
+	padding: 0.5em;
+
+	& > .header,
+	& > .main,
+	& > .footer {
+		display: flex;
+	}
+}
+
+.header {
+	justify-content: space-between;
+	align-items: center;
+	background-color: $backColor;
+	border-radius: .5em .5em 0 0;
+	padding: 1em;
+
+	.column {
+		display: flex;
+		align-items: center;
+	}
+
+	.app-logo {
+		width: 4em;
+		height: 4em;
+		object-fit: contain;
+	}
+
+	.app-name {
+		text-transform: uppercase;
+		margin-left: .5em;
+		font-family: 'Roboto Mono';
+		font-weight: bold;
+		color: $headerTextColor;
+	}
+
+	.clock {
+		font-family: 'Roboto Mono';
+		font-weight: bold;
+		font-size: 1.25em;
+		color: $headerTextColor;
+	}
+}
+
+.footer {
+	justify-content: center;
+	align-items: center;
+	background-color: $backColor;
+	border-radius: 0 0 .5em .5em;
+	padding: 1em;
+
+	.copyright {
+		font-family: 'Roboto Mono';
+		font-weight: bold;
+		font-size: 1em;
+		color: $headerTextColor;
+	}
+}
+
+.main {
+	justify-content: space-between;
+	background-color: $backColor;
+	padding: 1em;
+	border-block-start: 2px solid $borderColor;
+	border-block-end: 2px solid $borderColor;
+	flex-grow: 1;
+}
+
+.dashboard {
+	gap: 1em;
+
+	.board {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		background-color: white;
+		flex: 10em 1 1;
+
+		&-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: .5em 1em;
+			font-family: 'Roboto Mono';
+			font-weight: bold;
+		}
+
+		&-main {
+			padding: .5em 1em;
+			flex-grow: 1;
+		}
+
+		&-footer {
+			padding: .5em 1em;
+		}
+
+		.title {
+			text-transform: uppercase;
+			font-family: 'Roboto Mono';
+			font-weight: bold;
+		}
+
+		.counter {
+			font-family: 'Roboto Mono';
+			font-weight: bold;
+		}
+
+		.board-bottom-btn {
+			width: 100%;
+		}
+	}
+
+	#todoBoard {
+		.board-header,
+		.board-footer {
+			background-color: rgb(42, 209, 209);
+		}
+	}
+
+	#inProgressBoard {
+		.board-header,
+		.board-footer {
+			background-color: yellowgreen;
+		}
+	}
+
+	#doneBoard {
+		.board-header,
+		.board-footer {
+			background-color: rgb(227, 54, 243);
+		}
+	}
+
+	.task {
+		display: flex;
+		flex-direction: column;
+		margin-block-start: .5em;
+		margin-block-end: .5em;
+		border: 1px solid $borderColor;
+		border-radius: .5em;
+		padding: .5em 1em;
+
+		.line {
+			display: flex;
+			justify-content: space-between;
+			margin-block-start: .5em;
+			margin-block-end: .5em;
+			align-items: center;
+		}
+
+		.edit-btn {
+			width: auto;
+		}
+
+		.delete-btn {
+			width: auto;
+			margin-left: .5em;
+		}
+
+		.move-btn {
+			width: auto;
+		}
+	}
+}
+
+.modal-wrapper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: $shadowColor;
+	display: flex;
+
+	.modal-content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		min-height: 200px;
+		width: 50vw;
+		height: 50vh;
+		max-width: 400px;
+		max-height: 300px;
+		margin: auto;
+		background-color: $backColor;
+		border: 1px solid $borderColor;
+		border-radius: .5em;
+	}
+
+	.line {
+		display: flex;
+		justify-content: space-between;
+		padding: 1em;
+		box-sizing: border-box;
+		width: 100%;
+	}
+
+	.line2 {
+		flex-grow: 1;
+	}
+
+	.line3 {
+		.column {
+			display: flex;
+			flex-grow: 1;
+
+			&:last-child {
+				justify-content: flex-end;
+			}
+		}
+	}
+
+	.title {
+		width: 100%;
+		border: 1px solid $borderColor;
+		border-radius: .5em;
+		padding: .5em
+	}
+
+	.description {
+		width: 100%;
+		height: 100%;
+		border: 1px solid $borderColor;
+		border-radius: .5em;
+		padding: .5em
+	}
+
+	.user {
+		width: 100%;
+		border: 1px solid $borderColor;
+		border-radius: .5em;
+		padding: .25em .5em
+	}
+}

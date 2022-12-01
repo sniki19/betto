@@ -1,10 +1,15 @@
+import { store } from '../../store'
 import { nextWorkflowStepExists } from '../../utils/workflow'
 import { cb, ce } from '../shared'
 
 export const createTask = props => {
 	const { id, title, description, time, userId, workflowStep } = props
 
+	const state = store.getState()
+	const user = state.users.find(user => user.id === userId)
+
 	const line1 = ce('div', {
+		className: 'line line-1',
 		children: [
 			ce('div', {
 				children: [
@@ -16,10 +21,12 @@ export const createTask = props => {
 			ce('div', {
 				children: [
 					cb({
+						className: 'btn edit-btn',
 						value: 'Edit',
 						'data-action': 'edit'
 					}),
 					cb({
+						className: 'btn delete-btn',
 						value: 'Delete',
 						'data-action': 'delete'
 					})
@@ -31,12 +38,14 @@ export const createTask = props => {
 	let nextStepBtn = null
 	if (nextWorkflowStepExists(workflowStep)) {
 		nextStepBtn = cb({
+			className: 'btn move-btn',
 			value: '>',
 			'data-action': 'move'
 		})
 	}
 
 	const line2 = ce('div', {
+		className: 'line line2',
 		children: [
 			ce('span', {
 				innerHTML: description
@@ -46,28 +55,22 @@ export const createTask = props => {
 	})
 
 	const line3 = ce('div', {
+		className: 'line line3',
 		children: [
 			ce('span', {
-				innerHTML: userId,
-				style: 'color: yellowgreen;'
+				innerHTML: user.name
 			}),
 			ce('span', {
-				innerHTML: new Date(time).toLocaleDateString(),
-				style: 'color: blue;'
+				innerHTML: new Date(time).toLocaleDateString()
 			})
 		]
-	})
-
-	const line4 = ce('div', {
-		innerHTML: workflowStep
 	})
 
 	const task = ce('div', {
 		id: id,
 		className: 'task',
-		style: 'border: 1px solid red',
 		'data-dnditem': true,
-		children: [line1, line2, line3, line4]
+		children: [line1, line2, line3]
 	})
 
 	return task

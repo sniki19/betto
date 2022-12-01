@@ -1,9 +1,12 @@
 import { addTaskToBoardAction, closeModalAction, updateTaskAction } from '../../store/actions'
 import { store } from '../../store'
 import { cb, ce, cf, csb, cta, cti } from '../shared'
+import { uid } from '../../utils/tools'
 
 const createUserSelectBox = (callback, selectedId) => {
-	const usersBox = csb({}, (e) => {
+	const usersBox = csb({
+		className: 'user'
+	}, (e) => {
 		callback(e.target.value)
 	})
 
@@ -25,7 +28,7 @@ const createUserSelectBox = (callback, selectedId) => {
 const getPropsById = id => {
 	if (!id) {
 		return {
-			id: Date.now().toString(),
+			id: uid(),
 			title: '',
 			description: '',
 			time: Date.now(),
@@ -44,9 +47,12 @@ export const createTaskModalContent = id => {
 	const setUserId = userId => props.userId = userId
 
 	const line1 = ce('div', {
+		className: 'line line1',
 		children: [
 			cti({
-				value: props.title
+				className: 'title',
+				value: props.title,
+				placeholder: 'Title'
 			}, (e) => {
 				props.title = e.target.value
 			})
@@ -54,9 +60,12 @@ export const createTaskModalContent = id => {
 	})
 
 	const line2 = ce('div', {
+		className: 'line line2',
 		children: [
 			cta({
-				value: props.description
+				className: 'description',
+				value: props.description,
+				placeholder: 'Description'
 			}, (e) => {
 				props.description = e.target.value
 			})
@@ -64,18 +73,23 @@ export const createTaskModalContent = id => {
 	})
 
 	const line3 = ce('div', {
+		className: 'line line3',
 		children: [
 			ce('div', {
+				className: 'column',
 				children: [createUserSelectBox(setUserId, props.userId)]
 			}),
 			ce('div', {
+				className: 'column',
 				children: [
 					cb({
+						className: 'btn cancel-btn',
 						value: 'Cancel'
 					}, () => {
 						store.dispatch(closeModalAction())
 					}),
 					cb({
+						className: 'btn confirm-btn',
 						value: 'Confirm'
 					}, () => {
 						if (isNewTask) {

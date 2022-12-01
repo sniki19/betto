@@ -1,11 +1,13 @@
-import { ce, cf } from '../shared'
+import { cf } from '../shared'
+import { footer } from './footer'
+import { header } from './header'
 import { main } from './main'
 
 export const app = () => {
 	const content = cf([
-		ce('header'),
+		header(),
 		main(),
-		ce('footer')
+		footer()
 	])
 
 	return content

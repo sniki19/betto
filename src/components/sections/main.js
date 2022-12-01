@@ -29,8 +29,8 @@ export const main = () => {
 		filter: task => task.workflowStep === 'done'
 	})
 
-	return ce('div', {
-		className: 'dashboard',
+	return ce('main', {
+		className: 'main dashboard',
 		children: [
 			todoBoard,
 			inProgressBoard,
