@@ -1,7 +1,8 @@
-import { addTaskToBoardAction, closeModalAction, updateTaskAction } from '../../store/actions'
+import { fetchCreateTask, fetchUpdateTask } from '../../services/asyncActions/tasks'
 import { store } from '../../store'
-import { cb, ce, cf, csb, cta, cti } from '../shared'
+import { closeModalAction } from '../../store/actions'
 import { uid } from '../../utils/tools'
+import { cb, ce, cf, csb, cta, cti } from '../shared'
 
 const createUserSelectBox = (callback, selectedId) => {
 	const usersBox = csb({
@@ -25,7 +26,7 @@ const createUserSelectBox = (callback, selectedId) => {
 	return usersBox
 }
 
-const getPropsById = id => {
+const getTaskById = id => {
 	if (!id) {
 		return {
 			id: uid(),
@@ -43,18 +44,18 @@ const getPropsById = id => {
 
 export const createTaskModalContent = id => {
 	const isNewTask = !id
-	const props = getPropsById(id)
-	const setUserId = userId => props.userId = userId
+	const task = getTaskById(id)
+	const setUserId = userId => task.userId = userId
 
 	const line1 = ce('div', {
 		className: 'line line1',
 		children: [
 			cti({
 				className: 'title',
-				value: props.title,
+				value: task.title,
 				placeholder: 'Title'
 			}, (e) => {
-				props.title = e.target.value
+				task.title = e.target.value
 			})
 		]
 	})
@@ -64,10 +65,10 @@ export const createTaskModalContent = id => {
 		children: [
 			cta({
 				className: 'description',
-				value: props.description,
+				value: task.description,
 				placeholder: 'Description'
 			}, (e) => {
-				props.description = e.target.value
+				task.description = e.target.value
 			})
 		]
 	})
@@ -77,7 +78,7 @@ export const createTaskModalContent = id => {
 		children: [
 			ce('div', {
 				className: 'column',
-				children: [createUserSelectBox(setUserId, props.userId)]
+				children: [createUserSelectBox(setUserId, task.userId)]
 			}),
 			ce('div', {
 				className: 'column',
@@ -93,9 +94,9 @@ export const createTaskModalContent = id => {
 						value: 'Confirm'
 					}, () => {
 						if (isNewTask) {
-							store.dispatch(addTaskToBoardAction(props))
+							store.dispatch(fetchCreateTask(task))
 						} else {
-							store.dispatch(updateTaskAction(props))
+							store.dispatch(fetchUpdateTask(task))
 						}
 
 						store.dispatch(closeModalAction())
@@ -105,6 +106,5 @@ export const createTaskModalContent = id => {
 		]
 	})
 
-	const task = cf([line1, line2, line3])
-	return task
+	return cf([line1, line2, line3])
 }

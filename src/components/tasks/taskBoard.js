@@ -1,6 +1,7 @@
 import { createModal } from '../../modal/modalManager'
+import { fetchDeleteTask } from '../../services/asyncActions/tasks'
 import { store } from '../../store'
-import { deleteAllCompletedTasksAction, deleteTaskAction, moveTaskToNextBoardAction, openModalAction } from '../../store/actions'
+import { deleteAllCompletedTasksAction, moveTaskToNextBoardAction, openModalAction } from '../../store/actions'
 import { cb, ce } from '../shared'
 import { createTask } from './task'
 import { createTaskModalContent } from './taskModal'
@@ -110,7 +111,7 @@ export const createTaskBoard = (props) => {
 				store.dispatch(openModalAction())
 				break
 			case 'delete':
-				store.dispatch(deleteTaskAction(id))
+				store.dispatch(fetchDeleteTask(id))
 				break
 			case 'delete-all':
 				store.dispatch(deleteAllCompletedTasksAction())

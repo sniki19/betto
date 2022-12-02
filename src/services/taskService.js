@@ -4,6 +4,7 @@ const url = endpoint => {
 
 const fetchData = request => fetch(request)
 	.then(response => response.json())
+	.catch(console.warn)
 
 const getAll = () => {
 	return fetchData(url('tasks'))
@@ -14,7 +15,7 @@ const getById = id => {
 }
 
 const create = task => {
-	const request = (url('tasks'), {
+	const request = new Request(url('tasks'), {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -25,7 +26,7 @@ const create = task => {
 }
 
 const update = task => {
-	const request = (url('tasks'), {
+	const request = new Request(url(`tasks/${task.id}`), {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json'
@@ -35,9 +36,17 @@ const update = task => {
 	return fetchData(request)
 }
 
+const remove = id => {
+	const request = new Request(url(`tasks/${id}`), {
+		method: 'DELETE'
+	})
+	return fetchData(request)
+}
+
 export default {
 	getAll,
 	getById,
 	create,
-	update
+	update,
+	remove
 }
