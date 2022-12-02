@@ -3,10 +3,8 @@ import {
 	addTaskToBoardAction,
 	deleteAllCompletedTasksAction,
 	deleteTaskAction,
-	moveTaskToNextBoardAction,
-	updateTaskAction,
 	loadTasksAction,
-	moveTaskToBoardAction
+	updateTaskAction
 } from './tasks'
 import { loadUsersAction } from './users'
 
@@ -15,8 +13,6 @@ export {
 	updateTaskAction,
 	deleteTaskAction,
 	deleteAllCompletedTasksAction,
-	moveTaskToNextBoardAction,
-	moveTaskToBoardAction,
 	loadUsersAction,
 	openModalAction,
 	closeModalAction,

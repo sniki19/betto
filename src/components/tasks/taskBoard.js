@@ -1,7 +1,7 @@
 import { createModal } from '../../modal/modalManager'
-import { fetchDeleteTask } from '../../services/asyncActions/tasks'
+import { fetchDeleteAllCompletedTasks, fetchDeleteTask, fetchMoveTaskToNextStep } from '../../services/asyncActions/tasks'
 import { store } from '../../store'
-import { deleteAllCompletedTasksAction, moveTaskToNextBoardAction, openModalAction } from '../../store/actions'
+import { openModalAction } from '../../store/actions'
 import { cb, ce } from '../shared'
 import { createTask } from './task'
 import { createTaskModalContent } from './taskModal'
@@ -79,8 +79,7 @@ export const createTaskBoard = (props) => {
 
 	const board = ce('section', {
 		id,
-		className: 'board',
-		'data-dndzone': true
+		className: 'board'
 	})
 
 	const header = createBoardHeader(name)
@@ -103,18 +102,18 @@ export const createTaskBoard = (props) => {
 				createModal(createTaskModalContent())
 				store.dispatch(openModalAction())
 				break
-			case 'move':
-				store.dispatch(moveTaskToNextBoardAction(id))
-				break
 			case 'edit':
 				createModal(createTaskModalContent(id))
 				store.dispatch(openModalAction())
+				break
+			case 'move':
+				store.dispatch(fetchMoveTaskToNextStep(id))
 				break
 			case 'delete':
 				store.dispatch(fetchDeleteTask(id))
 				break
 			case 'delete-all':
-				store.dispatch(deleteAllCompletedTasksAction())
+				store.dispatch(fetchDeleteAllCompletedTasks())
 				break
 		}
 	})

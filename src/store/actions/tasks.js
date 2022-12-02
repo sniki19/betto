@@ -1,7 +1,7 @@
 import { actionType } from '../../utils/constants'
 
 export const addTaskToBoardAction = task => ({
-	type: actionType.addTaskOnBoard,
+	type: actionType.createTask,
 	payload: task
 })
 
@@ -17,19 +17,6 @@ export const deleteTaskAction = id => ({
 
 export const deleteAllCompletedTasksAction = () => ({
 	type: actionType.deleteAllCompletedTasks
-})
-
-export const moveTaskToNextBoardAction = id => ({
-	type: actionType.moveTaskToNextBoard,
-	payload: id
-})
-
-export const moveTaskToBoardAction = (id, boardId) => ({
-	type: actionType.moveTaskToBoard,
-	payload: {
-		id,
-		boardId
-	}
 })
 
 export const loadTasksAction = tasks => ({

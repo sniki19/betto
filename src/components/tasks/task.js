@@ -1,5 +1,5 @@
 import { store } from '../../store'
-import { nextWorkflowStepExists } from '../../utils/workflow'
+import { hasNextWorkflowStep } from '../../utils/workflow'
 import { cb, ce } from '../shared'
 
 export const createTask = props => {
@@ -36,7 +36,7 @@ export const createTask = props => {
 	})
 
 	let nextStepBtn = null
-	if (nextWorkflowStepExists(workflowStep)) {
+	if (hasNextWorkflowStep(workflowStep)) {
 		nextStepBtn = cb({
 			className: 'btn move-btn',
 			value: '>',
@@ -69,9 +69,11 @@ export const createTask = props => {
 	const task = ce('div', {
 		id: id,
 		className: 'task',
-		'data-dnditem': true,
 		children: [line1, line2, line3]
 	})
+	if (hasNextWorkflowStep(workflowStep)) {
+		task.dataset['dnditem'] = true
+	}
 
 	return task
 }

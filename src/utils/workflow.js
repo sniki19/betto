@@ -10,10 +10,16 @@ export const boardIdList = {
 	done: 'doneBoard'
 }
 
-const boardToWorkflowStep = {
+const boardIdToWorkflowStep = {
 	[boardIdList.todo]: workflowSteps[0],
 	[boardIdList.inProgress]: workflowSteps[1],
 	[boardIdList.done]: workflowSteps[2],
+}
+
+const workflowStepToBoardId = {
+	[workflowSteps[0]]: boardIdList.todo,
+	[workflowSteps[1]]: boardIdList.inProgress,
+	[workflowSteps[2]]: boardIdList.done
 }
 
 export const getNextWorkflowStep = currentStep => {
@@ -21,11 +27,15 @@ export const getNextWorkflowStep = currentStep => {
 	return workflowSteps[currentIndex + 1]
 }
 
-export const nextWorkflowStepExists = currentStep => {
+export const hasNextWorkflowStep = currentStep => {
 	const nextStep = getNextWorkflowStep(currentStep)
 	return !!nextStep
 }
 
-export const getWorkflowStep = boardId => {
-	return boardToWorkflowStep[boardId]
+export const getWorkflowStepByBoardId = boardId => {
+	return boardIdToWorkflowStep[boardId]
+}
+
+export const getBoardByWorkflowStep = step => {
+	return workflowStepToBoardId[step]
 }

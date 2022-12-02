@@ -1,27 +1,70 @@
+import { fetchMoveTaskToStep } from '../services/asyncActions/tasks'
 import { store } from '../store'
-import { moveTaskToBoardAction } from '../store/actions'
+import { getBoardByWorkflowStep, getNextWorkflowStep, getWorkflowStepByBoardId } from '../utils/workflow'
 
 const movingItemId = 'MOVING_ITEM_ID'
 
-export const initDnd = (zoneData = 'dndzone', itemData = 'dnditem') => {
-	const zones = document.querySelectorAll(`[data-${zoneData}]`)
-	zones.forEach(zone => {
-		zone.addEventListener('dragover', e => {
-			e.preventDefault()
-		})
-		zone.addEventListener('drop', e => {
-			const itemId = e.dataTransfer.getData(movingItemId)
-			const boardId = e.target.closest('.board').id
-			store.dispatch(moveTaskToBoardAction(itemId, boardId))
-		})
-	})
+const dragOverHandler = e => {
+	e.preventDefault()
+}
 
+const dropHandler = e => {
+	const taskId = e.dataTransfer.getData(movingItemId)
+	const boardId = e.target.closest('.board').id
+	const step = getWorkflowStepByBoardId(boardId)
+
+	store.dispatch(fetchMoveTaskToStep(taskId, step))
+}
+
+const addZoneEvents = zones => {
+	zones.forEach(zone => {
+		zone.dataset.dndzone = true
+
+		zone.addEventListener('dragover', dragOverHandler)
+
+		zone.addEventListener('drop', dropHandler)
+	})
+}
+
+const removeZoneEvent = zones => {
+	zones.forEach(zone => {
+		delete zone.dataset.dndzone
+
+		zone.removeEventListener('dragover', dragOverHandler)
+
+		zone.removeEventListener('drop', dropHandler)
+	})
+}
+
+const getAllowedZoneIds = taskId => {
+	const task = store.getState().tasks.find(task => task.id === taskId)
+	const nextWfStep = getNextWorkflowStep(task.workflowStep)
+
+	const zoneIds = [
+		getBoardByWorkflowStep(task.workflowStep),
+		getBoardByWorkflowStep(nextWfStep)
+	]
+
+	return zoneIds
+}
+
+export const initDnd = () => {
 	store.subscribe(() => {
-		const items = document.querySelectorAll(`[data-${itemData}]`)
-		items.forEach(item => {
-			item.setAttribute('draggable', true)
-			item.addEventListener('dragstart', e => {
+		const taskItems = document.querySelectorAll(`[data-dnditem]`)
+		taskItems.forEach(taskItem => {
+			taskItem.setAttribute('draggable', true)
+
+			const zoneIds = getAllowedZoneIds(taskItem.id)
+			const zones = zoneIds.map(zoneId => document.getElementById(zoneId))
+
+			taskItem.addEventListener('dragstart', e => {
+				addZoneEvents(zones)
+
 				e.dataTransfer.setData(movingItemId, e.target.id)
+			})
+
+			taskItem.addEventListener('dragend', e => {
+				removeZoneEvent(zones)
 			})
 		})
 	})

@@ -1,5 +1,5 @@
 import { actionType } from '../utils/constants'
-import { getNextWorkflowStep, getWorkflowStep } from '../utils/workflow'
+import { hasNextWorkflowStep } from '../utils/workflow'
 
 export const reducer = (state, action) => {
 	switch (action.type) {
@@ -8,7 +8,7 @@ export const reducer = (state, action) => {
 				...state,
 				tasks: action.payload
 			}
-		case actionType.addTaskOnBoard:
+		case actionType.createTask:
 			return state = {
 				...state,
 				tasks: [...state.tasks, action.payload]
@@ -22,32 +22,6 @@ export const reducer = (state, action) => {
 				tasks: [...otherTasks, updateTask]
 			}
 		}
-		case actionType.moveTaskToNextBoard: {
-			const taskId = action.payload
-			const otherTasks = state.tasks.filter(task => task.id !== taskId)
-			const targetTask = state.tasks.find(task => task.id === taskId)
-			const nextStep = getNextWorkflowStep(targetTask.workflowStep)
-			if (nextStep) {
-				targetTask.workflowStep = nextStep
-			}
-
-			return state = {
-				...state,
-				tasks: [...otherTasks, targetTask]
-			}
-		}
-		case actionType.moveTaskToBoard: {
-			const { id: taskId, boardId } = action.payload
-
-			const otherTasks = state.tasks.filter(task => task.id !== taskId)
-			const targetTask = state.tasks.find(task => task.id === taskId)
-			targetTask.workflowStep = getWorkflowStep(boardId)
-
-			return state = {
-				...state,
-				tasks: [...otherTasks, targetTask]
-			}
-		}
 		case actionType.deleteTask: {
 			const taskId = action.payload
 			return {
@@ -58,7 +32,7 @@ export const reducer = (state, action) => {
 		case actionType.deleteAllCompletedTasks:
 			return {
 				...state,
-				tasks: state.tasks.filter(task => task.workflowStep !== 'done')
+				tasks: state.tasks.filter(task => hasNextWorkflowStep(task.workflowStep))
 			}
 
 		case actionType.loadUsers:
