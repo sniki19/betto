@@ -1,6 +1,6 @@
 import taskService from '../services/taskService'
 import userService from '../services/userService'
-import { Store } from '../utils/Store'
+import { Store } from '../utils/store'
 import { loadTasksAction, loadUsersAction } from './actions'
 import { reducer } from './reducer'
 

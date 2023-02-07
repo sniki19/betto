@@ -1,4 +1,4 @@
-import { Observer } from './Observer'
+import { Observer } from './observer'
 import { isFunction, isObject } from './tools'
 
 export class Store extends Observer {
