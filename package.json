@@ -2,10 +2,11 @@
 	"name": "betto",
 	"version": "1.0.0",
 	"description": "",
+	"source": "src/index.html",
 	"scripts": {
 		"clean": "rimraf dist",
 		"start": "parcel src/index.html --open",
-		"build": "parcel build src/index.html --public-url ./"
+		"build": "npm run clean && parcel build --public-url ./ --no-source-maps"
 	},
 	"keywords": [],
 	"author": "",
